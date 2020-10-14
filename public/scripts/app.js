@@ -18,7 +18,6 @@
  */
 'use strict';
 
-hier2
 
 const weatherApp = {
   selectedLocations: {},
