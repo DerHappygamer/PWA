@@ -209,6 +209,7 @@ function updateData() {
 
 function updateDataAccu(){
   console.log('Hello');
+  const location = '16923176'
 }
 
 /**
