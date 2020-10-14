@@ -207,6 +207,10 @@ function updateData() {
   });
 }
 
+function updateDataAccu(){
+  console.log('Hello');
+}
+
 /**
  * Saves the list of locations.
  *
@@ -247,14 +251,16 @@ function init() {
   // Get the location list, and update the UI.
   weatherApp.selectedLocations = loadLocationList();
   updateData();
-  //
-  // // Set up the event handlers for all of the buttons.
-  // document.getElementById('butRefresh').addEventListener('click', updateData);
-  // document.getElementById('butAdd').addEventListener('click', toggleAddDialog);
-  // document.getElementById('butDialogCancel')
-  //     .addEventListener('click', toggleAddDialog);
-  // document.getElementById('butDialogAdd')
-  //     .addEventListener('click', addLocation);
+
+  updateDataAccu();
+
+  // Set up the event handlers for all of the buttons.
+  document.getElementById('butRefresh').addEventListener('click', updateData);
+  document.getElementById('butAdd').addEventListener('click', toggleAddDialog);
+  document.getElementById('butDialogCancel')
+      .addEventListener('click', toggleAddDialog);
+  document.getElementById('butDialogAdd')
+      .addEventListener('click', addLocation);
 }
 
 init();
