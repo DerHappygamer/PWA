@@ -17,6 +17,8 @@
  */
 'use strict';
 
+hier
+
 const weatherApp = {
   selectedLocations: {},
   addDialogContainer: document.getElementById('addDialogContainer'),
