@@ -1,5 +1,6 @@
 /* eslint-env node */
 /*
+*
  * @license
  * Your First PWA Codelab (https://g.co/codelabs/pwa)
  * Copyright 2019 Google Inc. All rights reserved.
