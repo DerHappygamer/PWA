@@ -158,6 +158,7 @@ function getForecast(req, resp) {
 }
 
 function test() {
+  //Test
   console.log('Hello')
 }
 
@@ -186,6 +187,7 @@ function startServer() {
 
   // Handle requests for the data
   app.get('/test',test);
+  //kommentar
   app.get('/forecast/:location', getForecast);
   app.get('/forecast/', getForecast);
   app.get('/forecast', getForecast);

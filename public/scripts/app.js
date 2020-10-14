@@ -213,6 +213,11 @@ function updateData() {
 function updateDataAccu(){
   console.log('Hello');
   const location = '16923176'
+
+  getForecastFromApi(location)
+      .then((forecast) => {
+        renderForecast(card, forecast);
+      });
 }
 
 /**
