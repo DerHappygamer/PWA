@@ -158,6 +158,21 @@ function getForecastFromNetwork(coords) {
 }
 
 /**
+ *
+ * @param {string} coords Location object to.
+ * @return {Object} The weather forecast, if th request fails, return null.
+ */
+function getForecastFromApi(coords) {
+  return fetch(`/api/forecast/${coords}`)
+      .then((response) => {
+        return response.json();
+      })
+      .catch(() =>{
+        return null
+      });
+}
+
+/**
  * Get's the cached forecast data from the caches object.
  *
  * @param {string} coords Location object to.
@@ -210,13 +225,17 @@ function updateData() {
 }
 
 function updateDataAccu(){
-  console.log('Hello');
-  const location = '16923176'
+  Object.keys(weatherApp.selectedLocations).forEach((key) => {
+    const location = weatherApp.selectedLocations[key];
+    const card = getForecastCard(location);
+    // CODELAB: Add code to call getForecastFromCache
 
-  getForecastFromApi(location)
-      .then((forecast) => {
-        renderForecast(card, forecast);
-      });
+    // Get the forecast data from the network.
+    getForecastFromApi(location.geo)
+        .then((forecast) => {
+          renderForecast(card, forecast);
+        });
+  });
 }
 
 /**
@@ -244,9 +263,9 @@ function loadLocationList() {
     }
   }
   if (!locations || Object.keys(locations).length === 0) {
-    const key = '40.7720232,-73.9732319';
+    const key = '53.531861,7.975102';
     locations = {};
-    locations[key] = {label: 'New Yorky City', geo: '40.7720232,-73.9732319'};
+    locations[key] = {label: 'Schortens', geo: '53.531861,7.975102'};
   }
   return locations;
 }
