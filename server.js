@@ -23,13 +23,13 @@ const fetch = require('node-fetch');
 const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
 
 // CODELAB: Change this to add a delay (ms) before the server responds.
-const FORECAST_DELAY = 2000;
+const FORECAST_DELAY = 200;
 
 // CODELAB: If running locally, set your Dark Sky API key here
 //const API_KEY = process.env.DARKSKY_API_KEY;
 const API_KEY = '';
 //const BASE_URL = `https://api.darksky.net/forecast`;
-const BASE_URL = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/`;
+const BASE_URL = `https://api.openweathermap.org/data/2.5/onecall?`;
 
 // Fake forecast data used if we can't reach the Dark Sky API
 const fakeForecast = {
@@ -141,7 +141,6 @@ function generateFakeForecast(location) {
  * @param {Response} resp response object from Express.
  */
 function getForecast(req, resp) {
-  console.log('Hello_normal_forecast')
   const location = req.params.location || '40.7720232,-73.9732319';
   const url = `${BASE_URL}/${API_KEY}/${location}`;
   fetch(url).then((resp) => {
@@ -165,35 +164,28 @@ function getForecast(req, resp) {
  * @param {Request} req request object from Express.
  * @param {Response} resp response object from Express.
  */
-function getForecast_accu(req, resp) {
-  //Test
-  console.log('Hello_from_server')
-  console.log(req.params.location)
-  const locationCode = getLocationCodeFromCoord(req.params.location)
-  console.log('forecat_accu_location' + locationCode)
+function test(req, resp) {
+  var location = req.params.location;
+  var loc = location.split(",");
+  const lat = loc[0];
+  const lon = loc[1];
+  const url = `${BASE_URL}lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=de`
 
-}
-
-/**
- *
- * @param {String} coords for getting location code via api
- *
- */
-function getLocationCodeFromCoord(coords, resp) {
-    const url = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${API_KEY}&q=${coords}&language=de-de`
-console.log(url)
   fetch(url).then((resp) => {
     if (resp.status !== 200) {
       throw new Error(resp.statusText);
     }
-    console.log('resp' + resp.json())
     return resp.json();
-  }).then((data) =>{
-    console.log('data' + resp.json(data))
+  }).then((data) => {
+    setTimeout(() => {
+      console.log(data)
       resp.json(data);
+    }, FORECAST_DELAY);
   }).catch((err) => {
-    console.log('Error update');
-  });
+    console.error('OWP Api Error: ', err.message);
+    resp.json(generateFakeForecast(location))
+  })
+
 }
 
 /**
@@ -219,9 +211,8 @@ function startServer() {
     next();
   });
 
-  // Handle requests for the data with api
-  app.get('/api/forecast/:location', getForecast_accu);
-  //other cast
+  // Handle requests for the data
+  app.get('/api/:location',test);
   //app.get('/forecast/:location', getForecast);
   //app.get('/forecast/', getForecast);
   //app.get('/forecast', getForecast);
