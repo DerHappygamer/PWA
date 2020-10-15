@@ -141,6 +141,7 @@ function generateFakeForecast(location) {
  * @param {Response} resp response object from Express.
  */
 function getForecast(req, resp) {
+  console.log('Hello')
   const location = req.params.location || '40.7720232,-73.9732319';
   const url = `${BASE_URL}/${API_KEY}/${location}`;
   fetch(url).then((resp) => {
@@ -158,34 +159,8 @@ function getForecast(req, resp) {
   });
 }
 
-/**
- * Gets the weather forecast from the Dark Sky API for the given location.
- *
- * @param {Request} req request object from Express.
- * @param {Response} resp response object from Express.
- */
-function test(req, resp) {
-  var location = req.params.location;
-  var loc = location.split(",");
-  const lat = loc[0];
-  const lon = loc[1];
-  const url = `${BASE_URL}lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=de`
-
-  fetch(url).then((resp) => {
-    if (resp.status !== 200) {
-      throw new Error(resp.statusText);
-    }
-    return resp.json();
-  }).then((data) => {
-    setTimeout(() => {
-      console.log(data)
-      resp.json(data);
-    }, FORECAST_DELAY);
-  }).catch((err) => {
-    console.error('OWP Api Error: ', err.message);
-    resp.json(generateFakeForecast(location))
-  })
-
+function test() {
+  console.log('Hello')
 }
 
 /**
@@ -212,10 +187,10 @@ function startServer() {
   });
 
   // Handle requests for the data
-  app.get('/api/:location',test);
-  //app.get('/forecast/:location', getForecast);
-  //app.get('/forecast/', getForecast);
-  //app.get('/forecast', getForecast);
+  app.get('/test',test);
+  app.get('/forecast/:location', getForecast);
+  app.get('/forecast/', getForecast);
+  app.get('/forecast', getForecast);
 
   // Handle requests for static files
   app.use(express.static('public'));
