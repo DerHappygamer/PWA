@@ -1,5 +1,4 @@
 /*
-*
  * @license
  * Your First PWA Codelab (https://g.co/codelabs/pwa)
  * Copyright 2019 Google Inc. All rights reserved.
@@ -17,7 +16,6 @@
  * limitations under the License
  */
 'use strict';
-
 
 const weatherApp = {
   selectedLocations: {},
@@ -79,41 +77,42 @@ function renderForecast(card, data) {
     return;
   }
 
+  console.log(data.current.dt)
   // Find out when the element was last updated.
   const cardLastUpdatedElem = card.querySelector('.card-last-updated');
   const cardLastUpdated = cardLastUpdatedElem.textContent;
   const lastUpdated = parseInt(cardLastUpdated);
-
   // If the data on the element is newer, skip the update.
-  if (lastUpdated >= data.currently.time) {
+  if (lastUpdated >= data.current.dt) {
     return;
   }
-  cardLastUpdatedElem.textContent = data.currently.time;
+  cardLastUpdatedElem.textContent = data.current.dt;
 
+console.log(data.current.weather)
   // Render the forecast data into the card.
-  card.querySelector('.description').textContent = data.currently.summary;
+  card.querySelector('.description').textContent = data.current.weather[0].description;
   const forecastFrom = luxon.DateTime
-      .fromSeconds(data.currently.time)
+      .fromSeconds(data.current.dt)
       .setZone(data.timezone)
       .toFormat('DDDD t');
   card.querySelector('.date').textContent = forecastFrom;
   card.querySelector('.current .icon')
-      .className = `icon ${data.currently.icon}`;
+      .className = `icon ${data.current.weather[0].main}`;
   card.querySelector('.current .temperature .value')
-      .textContent = Math.round(data.currently.temperature);
+      .textContent = Math.round(data.current.temp);
   card.querySelector('.current .humidity .value')
-      .textContent = Math.round(data.currently.humidity * 100);
+      .textContent = data.current.humidity;
   card.querySelector('.current .wind .value')
-      .textContent = Math.round(data.currently.windSpeed);
+      .textContent = Math.round(data.current.wind_speed);
   card.querySelector('.current .wind .direction')
-      .textContent = Math.round(data.currently.windBearing);
+      .textContent = Math.round(data.current.wind_deg);
   const sunrise = luxon.DateTime
-      .fromSeconds(data.daily.data[0].sunriseTime)
+      .fromSeconds(data.current.sunrise)
       .setZone(data.timezone)
       .toFormat('t');
   card.querySelector('.current .sunrise .value').textContent = sunrise;
   const sunset = luxon.DateTime
-      .fromSeconds(data.daily.data[0].sunsetTime)
+      .fromSeconds(data.current.sunset)
       .setZone(data.timezone)
       .toFormat('t');
   card.querySelector('.current .sunset .value').textContent = sunset;
@@ -121,17 +120,17 @@ function renderForecast(card, data) {
   // Render the next 7 days.
   const futureTiles = card.querySelectorAll('.future .oneday');
   futureTiles.forEach((tile, index) => {
-    const forecast = data.daily.data[index + 1];
+    const forecast = data.daily[index + 1];
     const forecastFor = luxon.DateTime
-        .fromSeconds(forecast.time)
+        .fromSeconds(forecast.dt)
         .setZone(data.timezone)
         .toFormat('ccc');
     tile.querySelector('.date').textContent = forecastFor;
-    tile.querySelector('.icon').className = `icon ${forecast.icon}`;
+    tile.querySelector('.icon').className = `icon ${forecast.weather[0].main}`;
     tile.querySelector('.temp-high .value')
-        .textContent = Math.round(forecast.temperatureHigh);
+        .textContent = Math.round(forecast.temp.max);
     tile.querySelector('.temp-low .value')
-        .textContent = Math.round(forecast.temperatureLow);
+        .textContent = Math.round(forecast.temp.min);
   });
 
   // If the loading spinner is still visible, remove it.
@@ -157,18 +156,20 @@ function getForecastFromNetwork(coords) {
       });
 }
 
+
 /**
+ * Get's the latest forecast data from the network.
  *
  * @param {string} coords Location object to.
- * @return {Object} The weather forecast, if th request fails, return null.
+ * @return {Object} The weather forecast, if the request fails, return null.
  */
 function getForecastFromApi(coords) {
-  return fetch(`/api/forecast/${coords}`)
+  return fetch(`/api/${coords}`)
       .then((response) => {
         return response.json();
       })
-      .catch(() =>{
-        return null
+      .catch(() => {
+        return null;
       });
 }
 
@@ -224,7 +225,11 @@ function updateData() {
   });
 }
 
-function updateDataAccu(){
+/**
+ *Gets the latest weather forecast data and updates each card with the
+ * new data from OPW api
+ */
+function updateData_accu() {
   Object.keys(weatherApp.selectedLocations).forEach((key) => {
     const location = weatherApp.selectedLocations[key];
     const card = getForecastCard(location);
@@ -233,6 +238,7 @@ function updateDataAccu(){
     // Get the forecast data from the network.
     getForecastFromApi(location.geo)
         .then((forecast) => {
+          console.log(forecast)
           renderForecast(card, forecast);
         });
   });
@@ -263,9 +269,9 @@ function loadLocationList() {
     }
   }
   if (!locations || Object.keys(locations).length === 0) {
-    const key = '53.531861,7.975102';
+    const key = '53.455542,7.760969';
     locations = {};
-    locations[key] = {label: 'Schortens', geo: '53.531861,7.975102'};
+    locations[key] = {label: 'Wiesede', geo: '53.455542,7.760969'};
   }
   return locations;
 }
@@ -277,12 +283,12 @@ function loadLocationList() {
 function init() {
   // Get the location list, and update the UI.
   weatherApp.selectedLocations = loadLocationList();
-  updateData();
+  //updateData();
 
-  updateDataAccu();
+  updateData_accu();
 
   // Set up the event handlers for all of the buttons.
-  document.getElementById('butRefresh').addEventListener('click', updateData);
+  document.getElementById('butRefresh').addEventListener('click', updateData_accu);
   document.getElementById('butAdd').addEventListener('click', toggleAddDialog);
   document.getElementById('butDialogCancel')
       .addEventListener('click', toggleAddDialog);

@@ -179,7 +179,7 @@ body {
   background-image: url("/images/clear-night.svg");
 }
 
-.icon.rain {
+.icon.Rain {
   background-image: url("/images/rain.svg");
 }
 
@@ -199,7 +199,7 @@ body {
   background-image: url("/images/fog.svg");
 }
 
-.icon.cloudy {
+.icon.Clouds {
   background-image: url("/images/cloudy.svg");
 }
 
