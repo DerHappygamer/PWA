@@ -27,7 +27,7 @@ const FORECAST_DELAY = 2000;
 
 // CODELAB: If running locally, set your Dark Sky API key here
 //const API_KEY = process.env.DARKSKY_API_KEY;
-const API_KEY = '92EPQXo4hX125lR9zcfI5GuZqqVBH11O';
+const API_KEY = '';
 //const BASE_URL = `https://api.darksky.net/forecast`;
 const BASE_URL = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/`;
 
