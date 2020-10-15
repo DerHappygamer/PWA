@@ -21,12 +21,14 @@
 const express = require('express');
 const fetch = require('node-fetch');
 const redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 // CODELAB: Change this to add a delay (ms) before the server responds.
 const FORECAST_DELAY = 200;
 
 // CODELAB: If running locally, set your Dark Sky API key here
-//const API_KEY = process.env.DARKSKY_API_KEY;
 const API_KEY = process.env.OPEN_WEATHER_API_KEY;
 //const BASE_URL = `https://api.darksky.net/forecast`;
 const BASE_URL = `https://api.openweathermap.org/data/2.5/onecall?`;
@@ -140,37 +142,13 @@ function generateFakeForecast(location) {
  * @param {Request} req request object from Express.
  * @param {Response} resp response object from Express.
  */
-function getForecast(req, resp) {
-  const location = req.params.location || '40.7720232,-73.9732319';
-  const url = `${BASE_URL}/${API_KEY}/${location}`;
-  fetch(url).then((resp) => {
-    if (resp.status !== 200) {
-      throw new Error(resp.statusText);
-    }
-    return resp.json();
-  }).then((data) => {
-    setTimeout(() => {
-      resp.json(data);
-    }, FORECAST_DELAY);
-  }).catch((err) => {
-    console.error('Dark Sky API Error:', err.message);
-    resp.json(generateFakeForecast(location));
-  });
-}
-
-/**
- * Gets the weather forecast from the Dark Sky API for the given location.
- *
- * @param {Request} req request object from Express.
- * @param {Response} resp response object from Express.
- */
 function test(req, resp) {
   var location = req.params.location;
   var loc = location.split(",");
   const lat = loc[0];
   const lon = loc[1];
   const url = `${BASE_URL}lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=de`
-
+  console.log(url)
   fetch(url).then((resp) => {
     if (resp.status !== 200) {
       throw new Error(resp.statusText);
@@ -199,7 +177,6 @@ function startServer() {
 
   // Redirect HTTP to HTTPS,
   app.use(redirectToHTTPS([/localhost:(\d{4})/], [], 301));
-
   // Logging for each request
   app.use((req, resp, next) => {
     const now = new Date();
