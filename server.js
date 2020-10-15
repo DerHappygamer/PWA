@@ -27,7 +27,7 @@ const FORECAST_DELAY = 200;
 
 // CODELAB: If running locally, set your Dark Sky API key here
 //const API_KEY = process.env.DARKSKY_API_KEY;
-const API_KEY = '';
+const API_KEY = process.env.OPEN_WEATHER_API_KEY;
 //const BASE_URL = `https://api.darksky.net/forecast`;
 const BASE_URL = `https://api.openweathermap.org/data/2.5/onecall?`;
 
