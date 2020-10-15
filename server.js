@@ -220,7 +220,6 @@ function startServer() {
   });
 
   // Handle requests for the data with api
-  //app.get('/test',test);
   app.get('/api/forecast/:location', getForecast_accu);
   //other cast
   //app.get('/forecast/:location', getForecast);
