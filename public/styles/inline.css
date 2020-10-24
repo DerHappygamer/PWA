@@ -381,6 +381,15 @@ body {
   color: #666;
 }
 
+.weather-card .hourly {
+  display: flex;
+}
+
+.weather-card .hourly .onehour{
+  flex-grow: 1;
+  text-align: center;
+}
+
 .weather-card .future {
   display: flex;
 }
@@ -391,6 +400,13 @@ body {
 }
 
 .weather-card .future .oneday .icon {
+  height: 64px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 64px;
+}
+
+.weather-card .hourly .onehour .icon {
   height: 64px;
   margin-left: auto;
   margin-right: auto;

@@ -103,7 +103,7 @@ console.log(data.current.weather)
   card.querySelector('.current .humidity .value')
       .textContent = data.current.humidity;
   card.querySelector('.current .wind .value')
-      .textContent = Math.round(data.current.wind_speed);
+      .textContent = Math.round((data.current.wind_speed*3.6));
   card.querySelector('.current .wind .direction')
       .textContent = Math.round(data.current.wind_deg);
   const sunrise = luxon.DateTime
@@ -117,9 +117,43 @@ console.log(data.current.weather)
       .toFormat('t');
   card.querySelector('.current .sunset .value').textContent = sunset;
 
+  // Render next 12 hours.
+  const futureHours = card.querySelectorAll('.hourly .onehour');
+  futureHours.forEach((tile, index) => {
+    console.log('Hallo hour '+ index);
+    const HourForecast = data.hourly[index + 1];
+    const HourForecastFor = luxon.DateTime
+        .fromSeconds(HourForecast.dt)
+        .setZone(data.timezone)
+        .toFormat('T');
+    tile.querySelector('.hour').textContent = HourForecastFor;
+    var cloud = HourForecast.weather[0].main;
+    if(cloud == 'Clouds'){
+      var cloudiness = HourForecast.clouds;
+      if (cloudiness >= 65){
+        console.log('stark')
+        var weathericon = 'Clouds'
+      }else{
+        console.log('partly')
+        var weathericon = 'partly-cloudy-day'
+      }
+    }else{
+      console.log('sderes weter')
+      var weathericon = HourForecast.weather[0].main;
+    }
+    tile.querySelector('.icon').className = `icon ` + weathericon;
+
+    tile.querySelector('.temp .value')
+         .textContent = Math.round(HourForecast.temp);
+    tile.querySelector('.precipitation .value')
+         .textContent = Math.round(HourForecast.pop*100)
+  });
+
+
   // Render the next 7 days.
   const futureTiles = card.querySelectorAll('.future .oneday');
   futureTiles.forEach((tile, index) => {
+    console.log('Hallo day '+ index);
     const forecast = data.daily[index + 1];
     const forecastFor = luxon.DateTime
         .fromSeconds(forecast.dt)
@@ -132,6 +166,7 @@ console.log(data.current.weather)
     tile.querySelector('.temp-low .value')
         .textContent = Math.round(forecast.temp.min);
   });
+
 
   // If the loading spinner is still visible, remove it.
   const spinner = card.querySelector('.card-spinner');

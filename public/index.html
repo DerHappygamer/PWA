@@ -44,9 +44,9 @@
   <header class="header">
     <h1>
       Weather PWA
-      <a href="https://darksky.net/poweredby/" class="powered-by">
-        Powered by Dark Sky
-      </a>
+<!--      <a href="https://darksky.net/poweredby/" class="powered-by">-->
+<!--        Powered by Dark Sky-->
+<!--      </a>-->
     </h1>
     <button id="butInstall" aria-label="Install" hidden></button>
     <button id="butRefresh" aria-label="Refresh"></button>
@@ -58,10 +58,10 @@
       <span class="icon add"></span>
     </button>
 
-    <div id="about" class="weather-card">
-      <b>Your First Progressive Web App Codelab</b><br>
-      Get started at <a href="https://g.co/codelabs/pwa">https://g.co/codelabs/pwa</a>.
-    </div>
+<!--    <div id="about" class="weather-card">-->
+<!--      <b>Your First Progressive Web App Codelab</b><br>-->
+<!--      Get started at <a href="https://g.co/codelabs/pwa">https://g.co/codelabs/pwa</a>.-->
+<!--    </div>-->
 
     <div id="weather-template" class="weather-card" hidden>
       <div class="card-spinner">
@@ -75,6 +75,7 @@
       <div class="location">&nbsp;</div>
       <div class="date">&nbsp;</div>
       <div class="description">&nbsp;</div>
+
       <div class="current">
         <div class="visual">
           <div class="icon"></div>
@@ -90,7 +91,7 @@
           <div class="wind">
             <span class="label">Wind:</span>
             <span class="value"></span>
-            <span class="scale">mph</span>
+            <span class="scale">km/h</span>
             <span class="direction"></span>°
           </div>
           <div class="sunrise">
@@ -103,6 +104,130 @@
             </div>
         </div>
       </div>
+      <div class="hourly">
+          <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+        <div class="onehour">
+          <div class="hour"></div>
+          <div class="icon"></div>
+          <div class="temp">
+            <span class="value"></span><span class="scale">°C</span>
+          </div>
+          <div class="precipitation">
+            <span class="value"></span><span class="scale">%</span>
+          </div>
+        </div>
+      </div>
+
+
       <div class="future">
         <div class="oneday">
           <div class="date"></div>

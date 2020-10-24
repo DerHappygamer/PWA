@@ -147,7 +147,7 @@ function test(req, resp) {
   var loc = location.split(",");
   const lat = loc[0];
   const lon = loc[1];
-  const url = `${BASE_URL}lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=de`
+  const url = `${BASE_URL}lat=${lat}&lon=${lon}&appid=${API_KEY}&exclude=minutely&units=metric&lang=de`
   console.log(url)
   fetch(url).then((resp) => {
     if (resp.status !== 200) {
